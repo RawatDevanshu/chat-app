@@ -19,10 +19,20 @@ import {
   Keyboard,
 } from "phosphor-react";
 import { faker } from "@faker-js/faker";
-import React from "react";
+import React, { useState } from "react";
+import Shortcuts from "../../sections/settings/Shortcuts";
 
 const Settings = () => {
   const theme = useTheme();
+
+  const [openShortcuts, setOpenShortcuts] = useState(false);
+
+  const handleCloseShortcuts = () => {
+    setOpenShortcuts(false);
+  };
+  const handleOpenShortcuts = () => {
+    setOpenShortcuts(true);
+  };
 
   const list = [
     {
@@ -66,8 +76,7 @@ const Settings = () => {
       key: 6,
       icon: <Keyboard size={20} />,
       title: "Keyboard Shortcuts",
-      // onclick: handleOpenShortcuts,
-      onclick: () => {},
+      onclick: handleOpenShortcuts,
     },
     {
       key: 7,
@@ -78,58 +87,69 @@ const Settings = () => {
   ];
 
   return (
-    <Stack direction={"row"} sx={{ width: "100%" }}>
-      {/*left panel*/}
-      <Box
-        sx={{
-          overflowY: "scroll",
-          height: "100vh",
-          width: 320,
-          backgroundColor:
-            theme.palette.mode === "light"
-              ? "#f8faff"
-              : theme.palette.background,
-          boxShadow: "0px 0px 2px rgba(0,0,0,0.25)",
-        }}
-      >
-        <Stack p={4} spacing={5}>
-          {/*Header*/}
-          <Stack direction={"row"} alignItems="center" spacing={3}>
-            <IconButton>
-              <CaretLeft size={24} color="#4b4b4b" />
-            </IconButton>
-            <Typography variant="h6">Settings</Typography>
-          </Stack>
-          {/*Profile*/}
-          <Stack direction={"row"} spacing={3}>
-            <Avatar
-              sx={{ width: 56, height: 56 }}
-              src={faker.image.avatar()}
-              alt={faker.name.fullName()}
-            />
-            <Stack spacing={0.5}>
-              <Typography variant="article">{faker.name.fullName()}</Typography>
-              <Typography variant="body2">{faker.random.words()}</Typography>
+    <>
+      <Stack direction={"row"} sx={{ width: "100%" }}>
+        {/*left panel*/}
+        <Box
+          sx={{
+            overflowY: "scroll",
+            height: "100vh",
+            width: 320,
+            backgroundColor:
+              theme.palette.mode === "light"
+                ? "#f8faff"
+                : theme.palette.background,
+            boxShadow: "0px 0px 2px rgba(0,0,0,0.25)",
+          }}
+        >
+          <Stack p={4} spacing={5}>
+            {/*Header*/}
+            <Stack direction={"row"} alignItems="center" spacing={3}>
+              <IconButton>
+                <CaretLeft size={24} color="#4b4b4b" />
+              </IconButton>
+              <Typography variant="h6">Settings</Typography>
+            </Stack>
+            {/*Profile*/}
+            <Stack direction={"row"} spacing={3}>
+              <Avatar
+                sx={{ width: 56, height: 56 }}
+                src={faker.image.avatar()}
+                alt={faker.name.fullName()}
+              />
+              <Stack spacing={0.5}>
+                <Typography variant="article">
+                  {faker.name.fullName()}
+                </Typography>
+                <Typography variant="body2">{faker.random.words()}</Typography>
+              </Stack>
+            </Stack>
+            {/*Options*/}
+            <Stack spacing={4}>
+              {list.map(({ key, icon, title, onclick }) => {
+                return (
+                  <Stack
+                    sx={{ cursor: "pointer" }}
+                    onClick={onclick}
+                    spacing={2}
+                  >
+                    <Stack direction="row" spacing={2} alignItems="center">
+                      {icon}
+                      <Typography variant="body2">{title}</Typography>
+                    </Stack>
+                    {key !== 7 && <Divider />}
+                  </Stack>
+                );
+              })}
             </Stack>
           </Stack>
-          {/*Options*/}
-          <Stack spacing={4}>
-            {list.map(({ key, icon, title, onclick }) => {
-              return (
-                <Stack sx={{ cursor: "pointer" }} onClick={onclick} spacing={2}>
-                  <Stack direction="row" spacing={2} alignItems="center">
-                    {icon}
-                    <Typography variant="body2">{title}</Typography>
-                  </Stack>
-                  {key !== 7 && <Divider />}
-                </Stack>
-              );
-            })}
-          </Stack>
-        </Stack>
-      </Box>
-      {/*right panel*/}
-    </Stack>
+        </Box>
+        {/*right panel*/}
+      </Stack>
+      {openShortcuts && (
+        <Shortcuts open={openShortcuts} handleClose={handleCloseShortcuts} />
+      )}
+    </>
   );
 };
 
