@@ -46,6 +46,110 @@ const Nav_Setting = [
   },
 ];
 
+const MembersList = [
+  {
+    id: 0,
+    img: faker.image.avatar(),
+    name: faker.name.firstName(),
+    online: false,
+  },
+  {
+    id: 1,
+    img: faker.image.avatar(),
+    name: faker.name.firstName(),
+    online: true,
+  },
+  {
+    id: 3,
+    img: faker.image.avatar(),
+    name: faker.name.firstName(),
+    online: false,
+  },
+  {
+    id: 4,
+    img: faker.image.avatar(),
+    name: faker.name.firstName(),
+    online: true,
+  },
+  {
+    id: 5,
+    img: faker.image.avatar(),
+    name: faker.name.firstName(),
+    online: false,
+  },
+  {
+    id: 6,
+    img: faker.image.avatar(),
+    name: faker.name.firstName(),
+    online: true,
+  },
+  {
+    id: 7,
+    img: faker.image.avatar(),
+    name: faker.name.firstName(),
+    online: false,
+  },
+];
+
+const CallLogs = [
+  {
+    id: 0,
+    img: faker.image.avatar(),
+    name: faker.name.firstName(),
+    missed: false,
+    incoming: true,
+    online: false,
+  },
+  {
+    id: 1,
+    img: faker.image.avatar(),
+    name: faker.name.firstName(),
+    missed: true,
+    incoming: true,
+    online: true,
+  },
+  {
+    id: 3,
+    img: faker.image.avatar(),
+    name: faker.name.firstName(),
+    missed: false,
+    incoming: false,
+    online: true,
+  },
+  {
+    id: 4,
+    img: faker.image.avatar(),
+    name: faker.name.firstName(),
+    missed: false,
+    incoming: false,
+    online: true,
+  },
+  {
+    id: 5,
+    img: faker.image.avatar(),
+    name: faker.name.firstName(),
+    missed: true,
+    incoming: true,
+    online: false,
+  },
+  {
+    id: 6,
+    img: faker.image.avatar(),
+    name: faker.name.firstName(),
+    missed: true,
+    incoming: true,
+    online: false,
+  },
+  {
+    id: 7,
+    img: faker.image.avatar(),
+    name: faker.name.firstName(),
+    missed: false,
+    incoming: true,
+    online: true,
+  },
+];
+
 const ChatList = [
   {
     id: 0,
@@ -316,8 +420,10 @@ export {
   Profile_Menu,
   Nav_Setting,
   Nav_Buttons,
+  CallLogs,
   ChatList,
   Chat_History,
+  MembersList,
   Message_options,
   SHARED_DOCS,
   SHARED_LINKS,
