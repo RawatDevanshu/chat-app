@@ -1,10 +1,16 @@
 import { Stack } from "@mui/material";
 import { Container } from "@mui/system";
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import Logo from "../../assets/Images/logo.ico";
 
+const isAuthenticated = true;
+
 const MainLayout = () => {
+  if (isAuthenticated) {
+    return <Navigate to="/app" />;
+  }
+
   return (
     <>
       <Container sx={{ mt: 5 }} maxWidth="sm">
