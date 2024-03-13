@@ -1,17 +1,63 @@
 import { useTheme } from "@mui/material/styles";
-import { Avatar, Box, Divider, IconButton, Stack } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Divider,
+  IconButton,
+  Menu,
+  MenuItem,
+  Stack,
+} from "@mui/material";
 import { Gear } from "phosphor-react";
-import { Nav_Buttons } from "../../data";
+import { Nav_Buttons, Profile_Menu } from "../../data";
 import Logo from "../../assets/Images/logo.ico";
 import { faker } from "@faker-js/faker";
 import React, { useState } from "react";
 import useSettings from "../../hooks/useSettings";
 import AntSwitch from "../../components/AntSwitch";
+import { useNavigate } from "react-router-dom";
 
+const getPath = (index) => {
+  switch (index) {
+    case 0:
+      return "/app";
+    case 1:
+      return "/group";
+    case 2:
+      return "/call";
+    case 3:
+      return "/settings";
+    default:
+      break;
+  }
+};
+const getMenuPath = (index) => {
+  switch (index) {
+    case 0:
+      return "/profile";
+    case 1:
+      return "/settings";
+    case 2:
+      //TODO => update token and set isAuthenticated to false
+      return "/auth/login";
+    default:
+      break;
+  }
+};
 const Sidebar = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const [selected, setSelected] = useState(0);
   const { onToggleMode } = useSettings();
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <Box
       p={2}
@@ -64,6 +110,7 @@ const Sidebar = () => {
                 <IconButton
                   onClick={() => {
                     setSelected(el.index);
+                    navigate(getPath(el.index));
                   }}
                   sx={{
                     width: "max-content",
@@ -94,6 +141,7 @@ const Sidebar = () => {
             ) : (
               <IconButton
                 onClick={() => {
+                  navigate(getPath(3));
                   setSelected(3);
                 }}
                 sx={{
@@ -116,7 +164,42 @@ const Sidebar = () => {
             }}
             defaultChecked
           />
-          <Avatar src={faker.image.avatar()} />
+          <Avatar
+            id="basic-button"
+            onClick={handleClick}
+            src={faker.image.avatar()}
+          />
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            anchorOrigin={{ vertival: "bottom", horizontal: "right" }}
+            transformOrigin={{ vertical: "bottom", horizontal: "left" }}
+          >
+            <Stack spacing={1} px={1}>
+              {Profile_Menu.map((el, idx) => (
+                <MenuItem
+                  onClick={() => {
+                    handleClick();
+                  }}
+                >
+                  <Stack
+                    onClick={() => {
+                      navigate(getMenuPath(idx));
+                    }}
+                    sx={{ width: 100 }}
+                    direction="row"
+                    alignItems={"center"}
+                    justifyContent="space-between"
+                  >
+                    <span>{el.title}</span>
+                    {el.icon}
+                  </Stack>
+                </MenuItem>
+              ))}
+            </Stack>
+          </Menu>
         </Stack>
       </Stack>
     </Box>
