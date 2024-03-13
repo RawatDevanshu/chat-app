@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useTheme } from "@mui/material";
-import { MagnifyingGlass, PhoneCall, Plus } from "phosphor-react";
+import { MagnifyingGlass, PhoneCall } from "phosphor-react";
 import React, { useState } from "react";
 import { CallLogElement } from "../../components/CallElement";
 import { SimpleBarStyle } from "../../components/Scrollbar";
