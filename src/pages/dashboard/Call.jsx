@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useTheme } from "@mui/material";
-import { MagnifyingGlass, PhoneCall, Plus } from "phosphor-react";
+import { MagnifyingGlass, PhoneCall } from "phosphor-react";
 import React, { useState } from "react";
 import { CallLogElement } from "../../components/CallElement";
 import { SimpleBarStyle } from "../../components/Scrollbar";
@@ -44,7 +44,7 @@ const Call = () => {
         >
           <Stack p={3} spacing={2} sx={{ maxHeight: "100vh" }}>
             <Stack>
-              <Typography variant="h5">Groups</Typography>
+              <Typography variant="h5">Call Logs</Typography>
             </Stack>
             <Stack sx={{ width: "100%" }}>
               <Search>
