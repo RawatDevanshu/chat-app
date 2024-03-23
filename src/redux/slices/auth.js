@@ -86,7 +86,7 @@ export function ForgotPassword(formValues) {
   };
 }
 
-export function NewPassword(formValues) {
+export function ResetPassword(formValues) {
   return async (dispatch, getState) => {
     await axios
       .post(

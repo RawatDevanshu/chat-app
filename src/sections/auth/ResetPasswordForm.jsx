@@ -1,23 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import FormProvider from "../../components/hook-form/FormProvider";
 import { RHFTextField } from "../../components/hook-form";
-import { Alert, Button, Stack } from "@mui/material";
+import {
+  Alert,
+  Button,
+  IconButton,
+  InputAdornment,
+  Stack,
+} from "@mui/material";
+import { Eye, EyeSlash } from "phosphor-react";
 import { useDispatch } from "react-redux";
-import { ForgotPassword } from "../../redux/slices/auth";
+import { ResetPassword } from "../../redux/slices/auth";
+import { useSearchParams } from "react-router-dom";
 
 const ResetPasswordForm = () => {
+  const [queryParameters] = useSearchParams();
   const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = useState(false);
+
   const ResetPasswordSchema = Yup.object().shape({
-    email: Yup.string()
-      .required("Email is required")
-      .email("Email must be valid address"),
+    password: Yup.string()
+      .min(6, "Password must be at least 6 characters")
+      .required("Password is required"),
+    passwordConfirm: Yup.string()
+      .required("Password is required")
+      .oneOf([Yup.ref("password"), null], "Password must match"),
   });
 
   const defaultValues = {
-    email: "demo@tawk.com",
+    password: "",
+    passwordConfirm: "",
   };
 
   const methods = useForm({
@@ -35,7 +50,7 @@ const ResetPasswordForm = () => {
   const onSubmit = async (data) => {
     try {
       //submit data to backend
-      dispatch(ForgotPassword(data));
+      dispatch(ResetPassword({ ...data, token: queryParameters.get("token") }));
     } catch (error) {
       console.log(error);
       reset();
@@ -52,7 +67,42 @@ const ResetPasswordForm = () => {
         {!!errors.afterSubmit && (
           <Alert severity="error">{errors.afterSubmit.message}</Alert>
         )}
-        <RHFTextField name="email" label="Email address" />
+        <RHFTextField
+          name="password"
+          label="New Password"
+          type={showPassword ? "text" : "password"}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={() => {
+                    setShowPassword(!showPassword);
+                  }}
+                >
+                  {showPassword ? <Eye /> : <EyeSlash />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+        <RHFTextField
+          name="passwordConfirm"
+          label="Confirm Password"
+          type={showPassword ? "text" : "password"}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={() => {
+                    setShowPassword(!showPassword);
+                  }}
+                >
+                  {showPassword ? <Eye /> : <EyeSlash />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
 
         <Button
           fullWidth
@@ -71,7 +121,7 @@ const ResetPasswordForm = () => {
             },
           }}
         >
-          Send Request
+          Submit
         </Button>
       </Stack>
     </FormProvider>
