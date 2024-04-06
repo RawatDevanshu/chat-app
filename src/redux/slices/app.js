@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios from "../../utils/axios";
 
 const initialState = {
   sidebar: {
@@ -46,7 +46,7 @@ const slice = createSlice({
       state.friends = action.payload.friends;
     },
     updateFriendRequests(state, action) {
-      state.friendRequests = action.payload.requests;
+      state.friendRequests = action.payload.friendRequests;
     },
     selectConversation(state, action) {
       state.chat_type = "individual";
@@ -91,14 +91,13 @@ export const closeSnackbar = () => async (dispatch, getState) => {
 export const FetchUsers = () => {
   return async (dispatch, getState) => {
     await axios
-      .get("/users/get-users", {
+      .get("/user/get-users", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${getState().auth.token}`,
         },
       })
       .then((response) => {
-        console.log(response);
         dispatch(slice.actions.updateUsers({ users: response.data.data }));
       })
       .catch((error) => {
@@ -110,14 +109,13 @@ export const FetchUsers = () => {
 export const FetchFriends = () => {
   return async (dispatch, getState) => {
     await axios
-      .get("/users/get-friends", {
+      .get("/user/get-friends", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${getState().auth.token}`,
         },
       })
       .then((response) => {
-        console.log(response);
         dispatch(slice.actions.updateFriends({ friends: response.data.data }));
       })
       .catch((error) => {
@@ -128,16 +126,17 @@ export const FetchFriends = () => {
 export const FetchFriendRequests = () => {
   return async (dispatch, getState) => {
     await axios
-      .get("/users/get-friend-requests", {
+      .get("/user/get-friend-requests", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${getState().auth.token}`,
         },
       })
       .then((response) => {
-        console.log(response);
         dispatch(
-          slice.actions.updateFriendRequests({ request: response.data.data }),
+          slice.actions.updateFriendRequests({
+            friendRequests: response.data.data,
+          }),
         );
       })
       .catch((error) => {

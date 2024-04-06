@@ -53,7 +53,6 @@ export function LoginUser(formValues) {
         },
       )
       .then(function (response) {
-        console.log(response);
         dispatch(
           slice.actions.logIn({
             isLoggedIn: true,
@@ -149,7 +148,6 @@ export function RegisterUser(formValues) {
         },
       )
       .then((response) => {
-        console.log(response);
         dispatch(
           slice.actions.updateRegisterEmail({ email: formValues.email }),
         );
@@ -184,7 +182,6 @@ export function VerifyEmail(formValues) {
         },
       )
       .then((response) => {
-        console.log(response);
         dispatch(
           slice.actions.logIn({
             isLoggedIn: true,
