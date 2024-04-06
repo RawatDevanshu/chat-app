@@ -1,8 +1,15 @@
-import { Avatar, IconButton, Stack, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  IconButton,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 import { Chat } from "phosphor-react";
 import React from "react";
-import socket from "../socket";
+import { socket } from "../socket";
 import StyledBadge from "./StyledBadge";
 
 const StyledChatBox = styled(Box)(({ theme }) => ({
@@ -63,7 +70,7 @@ const UserComponent = (firstName, lastName, _id, online, img) => {
   );
 };
 
-const FriendRequestComponent = (firstName, lastName, _id, online, img id) => {
+const FriendRequestComponent = (firstName, lastName, _id, online, img, id) => {
   const theme = useTheme();
   const name = `${firstName} ${lastName}`;
   return (
@@ -106,13 +113,13 @@ const FriendRequestComponent = (firstName, lastName, _id, online, img id) => {
               });
             }}
           >
-           Accept Request 
+            Accept Request
           </Button>
         </Stack>
       </Stack>
     </StyledChatBox>
   );
-}
+};
 const FriendComponent = (firstName, lastName, _id, online, img) => {
   const theme = useTheme();
   const name = `${firstName} ${lastName}`;
@@ -149,14 +156,16 @@ const FriendComponent = (firstName, lastName, _id, online, img) => {
           </Stack>
         </Stack>
         <Stack direction={"row"} spacing={2} alignItems={"center"}>
-         <IconButton onClick={() => {
-            // start a new conversation
-          }}>
+          <IconButton
+            onClick={() => {
+              // start a new conversation
+            }}
+          >
             <Chat />
-          </IconButton> 
+          </IconButton>
         </Stack>
       </Stack>
     </StyledChatBox>
   );
-}
+};
 export { UserComponent, FriendRequestComponent, FriendComponent };

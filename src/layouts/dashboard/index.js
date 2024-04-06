@@ -17,11 +17,11 @@ const DashboardLayout = () => {
       window.onload = function () {
         if (!window.location.hash) {
           window.location = window.location + "#loaded";
-          window.location.reload;
+          window.location.reload();
         }
       };
 
-      window.reload();
+      window.onload();
 
       if (!socket) {
         connectSocket(user_id);

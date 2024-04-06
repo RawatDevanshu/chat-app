@@ -6,7 +6,11 @@ import {
   FriendRequestComponent,
   UserComponent,
 } from "../../components/Friends";
-import { FetchFriendRequests, FetchUsers } from "../../redux/slices/app";
+import {
+  FetchFriendRequests,
+  FetchFriends,
+  FetchUsers,
+} from "../../redux/slices/app";
 
 const UsersList = () => {
   const dispatch = useDispatch();
