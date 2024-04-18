@@ -177,7 +177,7 @@ const Sidebar = () => {
             anchorEl={anchorEl}
             open={open}
             onClose={handleClose}
-            anchorOrigin={{ vertival: "bottom", horizontal: "right" }}
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
             transformOrigin={{ vertical: "bottom", horizontal: "left" }}
           >
             <Stack spacing={1} px={1}>
@@ -186,6 +186,7 @@ const Sidebar = () => {
                   onClick={() => {
                     handleClick();
                   }}
+                  key={idx}
                 >
                   <Stack
                     onClick={() => {

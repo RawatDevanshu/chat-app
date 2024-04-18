@@ -12,7 +12,6 @@ import {
   MagnifyingGlass,
   User,
 } from "phosphor-react";
-import { ChatList } from "../../data/index";
 import { SimpleBarStyle } from "../../components/Scrollbar";
 import React, { useEffect, useState } from "react";
 import { useTheme } from "@emotion/react";
@@ -23,14 +22,16 @@ import {
 } from "../../components/Search";
 import ChatElement from "../../components/ChatElement";
 import Friends from "../../sections/main/Friends";
+import { fetchDirectConversations } from "../../redux/slices/conversation";
 import { socket } from "../../socket";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const user_id = window.localStorage.getItem("user_id");
 
 const Chats = () => {
-  const [openDialog, setOpenDialog] = useState(false);
   const theme = useTheme();
+
+  const dispatch = useDispatch();
 
   const { conversations } = useSelector(
     (state) => state.conversation.direct_chat,
@@ -38,10 +39,11 @@ const Chats = () => {
 
   useEffect(() => {
     socket.emit("get_direct_conversations", { user_id }, (data) => {
-      // data => list of conversations
+      dispatch(fetchDirectConversations({ conversations: data }));
     });
   }, []);
 
+  const [openDialog, setOpenDialog] = useState(false);
   const handleCloseDialog = () => {
     setOpenDialog(false);
   };

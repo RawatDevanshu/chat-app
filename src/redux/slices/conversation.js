@@ -16,7 +16,7 @@ const slice = createSlice({
   initialState,
   reducers: {
     fetchDirectConversations(state, action) {
-      const list = action.payload.conversation.map((el) => {
+      const list = action.payload.conversations.map((el) => {
         const this_user = el.participants.find(
           (elm) => elm._id.toString() !== user_id,
         );
@@ -36,9 +36,8 @@ const slice = createSlice({
 
       state.direct_chat.conversations = list;
     },
-    updateDirectConversation(state, action) {
-      const this_conversation = action.payload.conversation;
-
+    updateDirectConversations(state, action) {
+      const this_conversation = action.payload.conversations;
       state.direct_chat.conversations = state.direct_chat.conversations.map(
         (el) => {
           if (el.id !== this_conversation._id) {
@@ -62,7 +61,7 @@ const slice = createSlice({
         },
       );
     },
-    addDirectConversation(state, action) {
+    addDirectConversations(state, action) {
       const this_conversation = action.payload.conversation;
       const user = this_conversation.participants.find(
         (elm) => elm._id.toString() !== user_id,

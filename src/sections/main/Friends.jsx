@@ -96,7 +96,6 @@ const Friends = ({ open, handleClose }) => {
           </Stack>
         </Stack>
       </DialogContent>
-      {/* Dialog Content */}
     </Dialog>
   );
 };

@@ -46,14 +46,12 @@ const DashboardLayout = () => {
       });
 
       socket.on("start_chat", (data) => {
-        console.log(data);
-
         const existing_conversation = conversations.find(
           (el) => el.id === data._id,
         );
 
         if (existing_conversation) {
-          dispatch(updateDirectConversations({ conversation: data }));
+          dispatch(updateDirectConversations({ conversations: data }));
         } else {
           // add direct conversation
           dispatch(addDirectConversations({ conversation: data }));
