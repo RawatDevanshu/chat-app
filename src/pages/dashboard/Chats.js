@@ -22,7 +22,7 @@ import {
 } from "../../components/Search";
 import ChatElement from "../../components/ChatElement";
 import Friends from "../../sections/main/Friends";
-import { fetchDirectConversations } from "../../redux/slices/conversation";
+import { FetchDirectConversations } from "../../redux/slices/conversation";
 import { socket } from "../../socket";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -39,7 +39,7 @@ const Chats = () => {
 
   useEffect(() => {
     socket.emit("get_direct_conversations", { user_id }, (data) => {
-      dispatch(fetchDirectConversations({ conversations: data }));
+      dispatch(FetchDirectConversations({ conversation: data }));
     });
   }, []);
 

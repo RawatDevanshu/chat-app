@@ -39,6 +39,7 @@ export default slice.reducer;
 
 export function LoginUser(formValues) {
   // formValues => {email, password}
+  console.log(formValues);
   return async (dispatch, getState) => {
     await axios
       .post(

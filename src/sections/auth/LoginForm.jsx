@@ -48,6 +48,8 @@ const LoginForm = () => {
   const onSubmit = async (data) => {
     try {
       //submit data to backend
+      console.log("submit called");
+      console.log(data);
       dispatch(LoginUser(data));
     } catch (error) {
       console.log(error);

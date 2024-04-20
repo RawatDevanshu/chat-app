@@ -4,7 +4,7 @@ import Footer from "./Footer";
 import Header from "./Header";
 import Message from "./Message";
 
-const Conversation = () => {
+const ChatComponent = () => {
   return (
     <Stack height={"100%"} maxHeight={"100vh"} width={"auto"}>
       <Header />
@@ -20,4 +20,4 @@ const Conversation = () => {
   );
 };
 
-export default Conversation;
+export default ChatComponent;

@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
 import { selectConversation, showSnackbar } from "../../redux/slices/app";
 import {
-  addDirectConversations,
-  updateDirectConversations,
+  AddDirectConversations,
+  UpdateDirectConversations,
 } from "../../redux/slices/conversation";
 import { connectSocket, socket } from "../../socket";
 import Sidebar from "./Sidebar";
@@ -51,10 +51,10 @@ const DashboardLayout = () => {
         );
 
         if (existing_conversation) {
-          dispatch(updateDirectConversations({ conversations: data }));
+          dispatch(UpdateDirectConversations({ conversation: data }));
         } else {
           // add direct conversation
-          dispatch(addDirectConversations({ conversation: data }));
+          dispatch(AddDirectConversations({ conversation: data }));
         }
         dispatch(selectConversation({ room_id: data._id }));
       });

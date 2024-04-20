@@ -25,7 +25,7 @@ import {
   Prohibit,
   Trash,
 } from "phosphor-react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebar, UpdateSidebarType } from "../redux/slices/app";
 import { faker } from "@faker-js/faker";
 import AntSwitch from "./AntSwitch";
@@ -85,6 +85,10 @@ const Contact = () => {
   const [openBlock, setOpenBlock] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
 
+  const { current_conversation } = useSelector(
+    (state) => state.conversation.direct_chat,
+  );
+
   const handleCloseBlock = () => {
     setOpenBlock(false);
   };
@@ -136,13 +140,13 @@ const Contact = () => {
         >
           <Stack alignItems={"center"} direction="row" spacing={2}>
             <Avatar
-              src={faker.image.avatar()}
-              alt={faker.name.firstName()}
+              src={current_conversation?.img}
+              alt={current_conversation?.name}
               sx={{ height: 64, width: 64 }}
             />
             <Stack spacing={0.5}>
               <Typography variant="article" fontWeight={600}>
-                {faker.name.fullName()}
+                {current_conversation?.name}
               </Typography>
               <Typography variant="body2" fontWeight={500}>
                 {"+91 729 2892 2992"}

@@ -16,7 +16,7 @@ const slice = createSlice({
   initialState,
   reducers: {
     fetchDirectConversations(state, action) {
-      const list = action.payload.conversations.map((el) => {
+      const list = action.payload.conversation.map((el) => {
         const this_user = el.participants.find(
           (elm) => elm._id.toString() !== user_id,
         );
@@ -37,7 +37,7 @@ const slice = createSlice({
       state.direct_chat.conversations = list;
     },
     updateDirectConversations(state, action) {
-      const this_conversation = action.payload.conversations;
+      const this_conversation = action.payload.conversation;
       state.direct_chat.conversations = state.direct_chat.conversations.map(
         (el) => {
           if (el.id !== this_conversation._id) {
@@ -78,25 +78,62 @@ const slice = createSlice({
         pinned: false,
       });
     },
+    setCurrentConversation(state, action) {
+      state.direct_chat.current_conversation =
+        action.payload.current_conversation;
+    },
+    fetchCurrentMessages(state, action) {
+      const messages = action.payload.messages;
+      const formatted_messages = messages.map((el) => ({
+        id: el._id,
+        type: "msg",
+        subtype: el.type,
+        message: el.text,
+        incoming: el.to === user_id,
+        outgoing: el.from === user_id,
+      }));
+      state.direct_chat.current_messages = formatted_messages;
+    },
+  },
+  addDirectMessage(state, action) {
+    state.direct_chat.current_messages.push(action.payload.message);
   },
 });
 
 export default slice.reducer;
 
-export const fetchDirectConversations = ({ conversations }) => {
+export const FetchDirectConversations = ({ conversation }) => {
   return async (dispatch, getState) => {
-    dispatch(slice.actions.fetchDirectConversations({ conversations }));
+    dispatch(slice.actions.fetchDirectConversations({ conversation }));
   };
 };
 
-export const addDirectConversations = ({ conversations }) => {
+export const AddDirectConversations = ({ conversation }) => {
   return async (dispatch, getState) => {
-    dispatch(slice.actions.addDirectConversations({ conversations }));
+    dispatch(slice.actions.addDirectConversations({ conversation }));
   };
 };
 
-export const updateDirectConversations = ({ conversations }) => {
+export const UpdateDirectConversations = ({ conversation }) => {
   return async (dispatch, getState) => {
-    dispatch(slice.actions.updateDirectConversations({ conversations }));
+    dispatch(slice.actions.updateDirectConversations({ conversation }));
+  };
+};
+
+export const SetCurrentConversation = ({ current_conversation }) => {
+  return async (dispatch, getState) => {
+    dispatch(slice.actions.setCurrentConversation({ current_conversation }));
+  };
+};
+
+export const FetchCurrentMessages = ({ messages }) => {
+  return async (dispatch, getState) => {
+    dispatch(slice.actions.fetchCurrentMessages({ messages }));
+  };
+};
+
+export const AddDirectMessage = (message) => {
+  return async (dispatch, getState) => {
+    dispatch(slice.actions.addDirectMessage({ message }));
   };
 };
