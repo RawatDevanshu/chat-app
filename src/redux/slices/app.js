@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from "../../utils/axios";
 
 const initialState = {
+  user: {},
   sidebar: {
     open: false,
     type: "CONTACT", //can be CONTACT, STARRED, SHARED
@@ -47,6 +48,9 @@ const slice = createSlice({
     },
     updateFriendRequests(state, action) {
       state.friendRequests = action.payload.friendRequests;
+    },
+    fetchUser(state, action) {
+      state.user = action.payload.user;
     },
     selectConversation(state, action) {
       state.chat_type = "individual";
@@ -145,6 +149,23 @@ export const FetchFriendRequests = () => {
   };
 };
 
+export const FetchUserProfile = () => {
+  return async (dispatch, getState) => {
+    axios
+      .get("/user/get-me", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getState().auth.token}`,
+        },
+      })
+      .then((response) => {
+        dispatch(slice.actions.fetchUser({ user: response.data.data }));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
 export const selectConversation = ({ room_id }) => {
   return (dispatch, getState) => {
     dispatch(slice.actions.selectConversation({ room_id }));

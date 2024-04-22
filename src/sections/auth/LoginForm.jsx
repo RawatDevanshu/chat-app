@@ -45,11 +45,9 @@ const LoginForm = () => {
     formState: { errors, isSubmitting, isSubmitSuccessful },
   } = methods;
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data, event) => {
     try {
       //submit data to backend
-      console.log("submit called");
-      console.log(data);
       dispatch(LoginUser(data));
     } catch (error) {
       console.log(error);

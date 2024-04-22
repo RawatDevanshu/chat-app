@@ -2,7 +2,11 @@ import { Stack } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
-import { selectConversation, showSnackbar } from "../../redux/slices/app";
+import {
+  FetchUserProfile,
+  selectConversation,
+  showSnackbar,
+} from "../../redux/slices/app";
 import {
   AddDirectConversations,
   UpdateDirectConversations,
@@ -18,6 +22,10 @@ const DashboardLayout = () => {
   );
 
   const user_id = window.localStorage.getItem("user_id");
+
+  useEffect(() => {
+    dispatch(FetchUserProfile());
+  }, []);
 
   useEffect(() => {
     if (isLoggedIn) {

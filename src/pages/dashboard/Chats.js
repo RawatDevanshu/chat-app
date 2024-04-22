@@ -38,7 +38,9 @@ const Chats = () => {
   );
 
   useEffect(() => {
+    console.log("chat list socket called");
     socket.emit("get_direct_conversations", { user_id }, (data) => {
+      console.log("chat list emitted");
       dispatch(FetchDirectConversations({ conversation: data }));
     });
   }, []);

@@ -1,23 +1,13 @@
 import { useTheme } from "@mui/material/styles";
-import {
-  Avatar,
-  Box,
-  Divider,
-  IconButton,
-  Menu,
-  MenuItem,
-  Stack,
-} from "@mui/material";
+import { Box, Divider, IconButton, Stack } from "@mui/material";
 import { Gear } from "phosphor-react";
-import { Nav_Buttons, Profile_Menu } from "../../data";
+import { Nav_Buttons } from "../../data";
 import Logo from "../../assets/Images/logo.ico";
-import { faker } from "@faker-js/faker";
 import React, { useState } from "react";
 import useSettings from "../../hooks/useSettings";
 import AntSwitch from "../../components/AntSwitch";
 import { useNavigate } from "react-router-dom";
-import { LogoutUser } from "../../redux/slices/auth";
-import { useDispatch } from "react-redux";
+import ProfileMenu from "./ProfileMenu";
 
 const getPath = (index) => {
   switch (index) {
@@ -33,34 +23,13 @@ const getPath = (index) => {
       break;
   }
 };
-const getMenuPath = (index) => {
-  switch (index) {
-    case 0:
-      return "/profile";
-    case 1:
-      return "/settings";
-    case 2:
-      //TODO => update token and set isAuthenticated to false
-      return "/auth/login";
-    default:
-      break;
-  }
-};
+
 const Sidebar = () => {
-  const dispatch = useDispatch();
   const theme = useTheme();
   const navigate = useNavigate();
   const [selected, setSelected] = useState(0);
   const { onToggleMode } = useSettings();
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
   return (
     <Box
       p={2}
@@ -167,47 +136,7 @@ const Sidebar = () => {
             }}
             defaultChecked
           />
-          <Avatar
-            id="basic-button"
-            onClick={handleClick}
-            src={faker.image.avatar()}
-          />
-          <Menu
-            id="basic-menu"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-            transformOrigin={{ vertical: "bottom", horizontal: "left" }}
-          >
-            <Stack spacing={1} px={1}>
-              {Profile_Menu.map((el, idx) => (
-                <MenuItem
-                  onClick={() => {
-                    handleClick();
-                  }}
-                  key={idx}
-                >
-                  <Stack
-                    onClick={() => {
-                      if (idx === 2) {
-                        dispatch(LogoutUser());
-                      } else {
-                        navigate(getMenuPath(idx));
-                      }
-                    }}
-                    sx={{ width: 100 }}
-                    direction="row"
-                    alignItems={"center"}
-                    justifyContent="space-between"
-                  >
-                    <span>{el.title}</span>
-                    {el.icon}
-                  </Stack>
-                </MenuItem>
-              ))}
-            </Stack>
-          </Menu>
+          <ProfileMenu />
         </Stack>
       </Stack>
     </Box>
